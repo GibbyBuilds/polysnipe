@@ -1,0 +1,16 @@
+# Environment
+.env
+venv/
+__pycache__/
+*.pyc
+
+# Logs
+bot.log
+*.log
+
+# Results
+*.xlsx
+
+# OS
+.DS_Store
+Thumbs.db
