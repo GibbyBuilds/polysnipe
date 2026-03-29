@@ -234,8 +234,8 @@ def analyze(window_ts: int, window_minutes: int) -> Signal:
     # Divide by 7 (window_delta max weight) so high-delta = 1.0 confidence quickly
     confidence = min(abs(score) / 7.0, 1.0)
 
-    # Flag sideways markets: abs(window_delta_pct) < 0.005%
-    skip_flat = abs(win_delta_pct) < 0.005
+    # Flag sideways markets: abs(window_delta_pct) < 0.01%
+    skip_flat = abs(win_delta_pct) < 0.01
 
     return Signal(
         direction=direction,

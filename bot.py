@@ -70,6 +70,7 @@ class BotConfig:
         # Bankroll from env / defaults
         self.bankroll     = float(os.getenv("STARTING_BANKROLL", "10.0"))
         self.min_bet      = float(os.getenv("MIN_BET",           "5.0"))
+        self.max_bet      = float(os.getenv("MAX_BET",           "25.0"))
 
         # Bet-sizing per mode (flat fractions — used in safe/degen)
         self.bet_fractions = {
@@ -78,8 +79,8 @@ class BotConfig:
             "degen":      1.0,
         }
         self.min_confidence = {
-            "safe":       0.30,
-            "aggressive": 0.20,
+            "safe":       0.40,
+            "aggressive": 0.30,
             "degen":      0.00,
         }
 
@@ -467,7 +468,7 @@ class PolymarketBot:
 
         # ── Bet sizing ────────────────────────────────────────────────────────
         bet_usdc = self.cfg.dynamic_bet_size(final_signal.confidence, self.profits_above_original)
-        bet_usdc = min(bet_usdc, self.cfg.bankroll)
+        bet_usdc = min(bet_usdc, self.cfg.bankroll, self.cfg.max_bet)
         shares   = bet_usdc / token_price if token_price > 0 else 0
 
         if shares < MIN_SHARES:
